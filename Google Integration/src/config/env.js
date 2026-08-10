@@ -8,6 +8,8 @@ const envSchema = z.object({
   PORT: z.string().transform((val) => parseInt(val, 10)),
   //   MONGO_URI: z.string().url(),
   APP_BASE_URL: z.string().url(),
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
 });
 
 const envParseResult = envSchema.safeParse(process.env);
