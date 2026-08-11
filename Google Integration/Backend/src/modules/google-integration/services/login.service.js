@@ -31,6 +31,7 @@ export class AuthService {
     );
 
     return {
+      success: true,
       message: "Login Successfull",
       token: backendToken,
       user: {
