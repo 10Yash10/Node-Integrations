@@ -4,11 +4,26 @@ import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 
 function App() {
 
-  function handleLogin(credentialsResponse: CredentialResponse) {
+  async function handleLogin(credentialsResponse: CredentialResponse) {
 
-    const authorization_code = credentialsResponse.credential;
-    console.log("login successfull", authorization_code);
-    return "login successfull";
+    const authorization_token = credentialsResponse.credential;
+    console.log("login successfull", authorization_token);
+
+    try {
+
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/google-login`, {
+        method: "POST",
+        body: JSON.stringify({ "token": authorization_token }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      const result = await res.json();
+
+      console.log(result);
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   function handleError() {
