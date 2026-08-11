@@ -1,11 +1,12 @@
 // import { useState } from 'react'
 
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function Login() {
 
+    const navigate = useNavigate();
     const { login } = useAuth();
 
     async function handleLogin(credentialsResponse: CredentialResponse) {
@@ -26,7 +27,7 @@ function Login() {
 
             if (!result.success) {
                 console.error("some error occured");
-                <Navigate to="/login" replace />
+                navigate("/login", { replace: true })
             }
 
             // login user if everything is working
@@ -47,6 +48,8 @@ function Login() {
                 <p>Google oAuth Login</p>
 
                 <GoogleLogin onSuccess={handleLogin} onError={handleError} theme='filled_blue' size='large' text='continue_with' shape='circle' />
+
+                <button onClick={() => navigate(-1)}>go back</button>
             </section>
         </>
     )
