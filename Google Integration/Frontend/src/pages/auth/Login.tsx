@@ -3,6 +3,7 @@
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import api from "../../api/api.ts";
 
 function Login() {
 
@@ -16,19 +17,22 @@ function Login() {
 
         try {
 
-            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/google-login`, {
-                method: "POST",
-                body: JSON.stringify({ "token": authorization_token }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-            const result = await res.json();
+            // const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/auth/google-login`, {
+            //     method: "POST",
+            //     body: JSON.stringify({ "token": authorization_token }),
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     }
+            // });
+            // const result = await res.json();
 
-            if (!result.success) {
-                console.error("some error occured");
-                navigate("/login", { replace: true })
-            }
+            // if (!result.success) {
+            //     console.error("some error occured");
+            //     navigate("/login", { replace: true })
+            // }
+
+            const res = await api.post("auth/google-login", { token: authorization_token })
+            const result = res.data;
 
             // login user if everything is working
             login(result.token);

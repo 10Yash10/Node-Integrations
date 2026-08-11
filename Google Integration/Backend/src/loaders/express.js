@@ -8,7 +8,12 @@ export default async (app) => {
   app.head("/health", (req, res) => res.statsu(200).end());
 
   // middlewares
-  app.use(cors());
+  app.use(
+    cors({
+      origin: ["http://localhost:5173/", "http://localhost:5173"],
+      credentials: true,
+    }),
+  );
   app.use(express.json());
 
   // generic route
